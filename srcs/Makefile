@@ -1,7 +1,5 @@
 COMPOSE = docker compose
 
-# ─── All containers ───────────────────────────────────────────────────────────
-
 all: up
 
 up:
@@ -11,8 +9,6 @@ down:
 	$(COMPOSE) down
 
 re: down up
-
-# ─── Individual containers ────────────────────────────────────────────────────
 
 nginx:
 	$(COMPOSE) restart nginx
@@ -25,11 +21,6 @@ mariadb:
 
 phpmyadmin:
 	$(COMPOSE) restart phpmyadmin
-
-redis:
-	$(COMPOSE) restart redis
-
-# ─── Status / Logs ────────────────────────────────────────────────────────────
 
 ps:
 	$(COMPOSE) ps
@@ -46,16 +37,12 @@ logs-wordpress:
 logs-mariadb:
 	$(COMPOSE) logs -f mariadb
 
-# ─── Volumes (eval: "is it possible to view volumes?") ───────────────────────
-
 volumes:
 	docker volume ls
 	@echo "\n--- WordPress volume ---"
 	docker volume inspect wordpress
 	@echo "\n--- MariaDB volume ---"
 	docker volume inspect mariadb
-
-# ─── Clean (removes containers + volumes — loses data!) ───────────────────────
 
 clean: down
 	$(COMPOSE) down -v --remove-orphans

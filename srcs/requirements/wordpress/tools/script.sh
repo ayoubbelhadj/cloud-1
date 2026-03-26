@@ -19,10 +19,10 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 fi
 
 # Configure database connection
-wp config set DB_NAME "$SQL_DATABASE" --allow-root --path=/var/www/html
-wp config set DB_USER "$SQL_USER" --allow-root --path=/var/www/html
-wp config set DB_PASSWORD "$SQL_PASSWORD" --allow-root --path=/var/www/html
-wp config set DB_HOST 'mariadb:3306' --allow-root --path=/var/www/html
+wp config set DB_NAME "$SQL_DATABASE" --quiet --allow-root --path=/var/www/html
+wp config set DB_USER "$SQL_USER" --quiet --allow-root --path=/var/www/html
+wp config set DB_PASSWORD "$SQL_PASSWORD" --quiet --allow-root --path=/var/www/html
+wp config set DB_HOST 'mariadb:3306' --quiet --allow-root --path=/var/www/html
 
 # Install WordPress if not already installed
 if ! wp core is-installed --allow-root --path=/var/www/html 2>/dev/null; then
@@ -32,12 +32,14 @@ if ! wp core is-installed --allow-root --path=/var/www/html 2>/dev/null; then
         --admin_user="$ADMIN_USER" \
         --admin_password="$ADMIN_PASSWORD" \
         --admin_email="$ADMIN_EMAIL" \
+        --quiet \
         --allow-root \
         --path=/var/www/html
 
     wp user create "$WP_USER" "$WP_USER_EMAIL" \
         --role=author \
         --user_pass="$WP_USER_PASSWORD" \
+        --quiet \
         --allow-root \
         --path=/var/www/html
 fi
