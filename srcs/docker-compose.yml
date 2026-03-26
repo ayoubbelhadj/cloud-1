@@ -1,0 +1,85 @@
+services:
+
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - wordpress:/var/www/html
+    env_file:
+      - ./.env
+    networks:
+      - mynet
+    depends_on:
+      - wordpress
+      - phpmyadmin
+    restart: unless-stopped
+
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress
+    volumes:
+      - wordpress:/var/www/html
+    env_file:
+      - ./.env
+    networks:
+      - mynet
+    depends_on:
+      - mariadb
+      - redis
+    restart: unless-stopped
+
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+    env_file:
+      - ./.env
+    networks:
+      - mynet
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_ABSOLUTE_URI: "https://${DOMAIN_NAME}/phpmyadmin/"
+    networks:
+      - mynet
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    networks:
+      - mynet
+    restart: unless-stopped
+
+networks:
+  mynet:
+    name: mynet
+    driver: bridge
+
+volumes:
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: 'none'
+      device: '/opt/cloud-1/data/wordpress'
+      o: 'bind'
+
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: 'none'
+      device: '/opt/cloud-1/data/mariadb'
+      o: 'bind'
