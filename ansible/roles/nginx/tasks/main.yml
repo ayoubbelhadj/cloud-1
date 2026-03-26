@@ -1,0 +1,5 @@
+---
+- name: Build and start nginx container
+  ansible.builtin.command: docker compose up -d --build nginx
+  args:
+    chdir: "{{ app_dir }}/srcs"

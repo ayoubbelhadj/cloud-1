@@ -1,0 +1,5 @@
+---
+- name: Build and start WordPress container
+  ansible.builtin.command: docker compose up -d --build wordpress
+  args:
+    chdir: "{{ app_dir }}/srcs"

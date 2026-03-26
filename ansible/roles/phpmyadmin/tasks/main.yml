@@ -1,0 +1,5 @@
+---
+- name: Start phpMyAdmin container
+  ansible.builtin.command: docker compose up -d phpmyadmin
+  args:
+    chdir: "{{ app_dir }}/srcs"

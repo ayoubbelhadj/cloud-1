@@ -9,4 +9,6 @@
     - firewall    # UFW: allow 22/80/443 only
     - app         # copy source files, template .env
     - database    # start MariaDB container
-    - webserver   # start nginx, wordpress, phpmyadmin, redis containers
+    - wordpress   # build and start WordPress (php-fpm) container
+    - phpmyadmin  # start phpMyAdmin container
+    - nginx       # build and start nginx reverse proxy container

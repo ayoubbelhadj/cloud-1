@@ -42,14 +42,5 @@ if ! wp core is-installed --allow-root --path=/var/www/html 2>/dev/null; then
         --path=/var/www/html
 fi
 
-# Redis Object Cache
-if ! wp plugin is-active redis-cache --allow-root --path=/var/www/html 2>/dev/null; then
-    wp plugin install redis-cache --allow-root --path=/var/www/html/
-    wp plugin activate redis-cache --allow-root --path=/var/www/html/
-fi
-wp config set WP_REDIS_HOST redis --raw --allow-root --path=/var/www/html
-wp config set WP_REDIS_PORT 6379 --raw --allow-root --path=/var/www/html
-wp redis enable --allow-root --path=/var/www/html/ 2>/dev/null || true
-
 mkdir -p /run/php/
-/usr/sbin/php-fpm7.4 -F
+/usr/sbin/php-fpm8.2 -F

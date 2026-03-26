@@ -1,3 +1,6 @@
+srcs/.env
+*.retry
 .vault_pass
-.env
+*.pem
+*.key
 EVAL.md

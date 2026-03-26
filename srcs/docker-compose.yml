@@ -28,7 +28,6 @@ services:
       - mynet
     depends_on:
       - mariadb
-      - redis
     restart: unless-stopped
 
   mariadb:
@@ -53,13 +52,6 @@ services:
       - mynet
     depends_on:
       - mariadb
-    restart: unless-stopped
-
-  redis:
-    image: redis:alpine
-    container_name: redis
-    networks:
-      - mynet
     restart: unless-stopped
 
 networks:
