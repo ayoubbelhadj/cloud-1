@@ -1,0 +1,20 @@
+---
+- name: Copy srcs directory to remote
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../srcs/"
+    dest: "{{ app_dir }}/srcs/"
+    mode: preserve
+
+- name: Ensure scripts are executable
+  ansible.builtin.file:
+    path: "{{ item }}"
+    mode: '0755'
+  loop:
+    - "{{ app_dir }}/srcs/requirements/wordpress/tools/script.sh"
+    - "{{ app_dir }}/srcs/requirements/mariadb/tools/script.sh"
+
+- name: Template .env file
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ app_dir }}/srcs/.env"
+    mode: '0600'

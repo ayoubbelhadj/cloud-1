@@ -1,0 +1,5 @@
+---
+- name: Build and start database (MariaDB)
+  ansible.builtin.command: docker compose up -d --build mariadb
+  args:
+    chdir: "{{ app_dir }}/srcs"

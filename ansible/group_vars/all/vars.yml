@@ -1,0 +1,24 @@
+---
+# Server
+server_ip: "164.92.235.129"
+domain_name: "164.92.235.129.nip.io"
+
+# App directories on the remote server
+app_dir: "/opt/cloud-1"
+data_dir: "/opt/cloud-1/data"
+
+# Database
+sql_database: "wordpress"
+sql_user: "wpuser"
+sql_password: "{{ vault_sql_password }}"
+sql_root_password: "{{ vault_sql_root_password }}"
+
+# WordPress admin
+admin_user: "admin"
+admin_password: "{{ vault_admin_password }}"
+admin_email: "admin@cloud1.local"
+
+# WordPress second user
+wp_user: "editor"
+wp_user_email: "editor@cloud1.local"
+wp_user_password: "{{ vault_wp_user_password }}"

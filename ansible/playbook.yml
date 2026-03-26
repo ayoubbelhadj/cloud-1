@@ -1,0 +1,12 @@
+---
+- name: Deploy Cloud-1 (Inception) on remote server
+  hosts: all
+  become: true
+
+  roles:
+    - common      # system packages, create directories
+    - docker      # install Docker CE + compose plugin
+    - firewall    # UFW: allow 22/80/443 only
+    - app         # copy source files, template .env
+    - database    # start MariaDB container
+    - webserver   # start nginx, wordpress, phpmyadmin, redis containers
