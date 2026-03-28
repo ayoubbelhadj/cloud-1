@@ -3,6 +3,8 @@ COMPOSE = docker compose
 all: up
 
 up:
+	sudo mkdir -p /opt/cloud-1/data/wordpress
+	sudo mkdir -p /opt/cloud-1/data/mariadb
 	$(COMPOSE) up -d --build
 
 down:
@@ -49,6 +51,8 @@ clean: down
 
 fclean: clean
 	docker system prune -af --volumes
+	sudo rm -rf /opt/cloud-1/data/wordpress
+	sudo rm -rf /opt/cloud-1/data/mariadb
 
 .PHONY: all up down re nginx wordpress mariadb phpmyadmin redis \
         ps logs logs-nginx logs-wordpress logs-mariadb volumes clean fclean
